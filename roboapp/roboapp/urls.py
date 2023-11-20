@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from robomission.views import add_mission
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('add_mission/', add_mission, name='add_mission'),
 ]
