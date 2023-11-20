@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from robomission.views import add_mission
+from robomission.views import add_mission, view_missions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add_mission/', add_mission, name='add_mission'),
+    path('view_missions/', view_missions, name='view_missions'),
 ]

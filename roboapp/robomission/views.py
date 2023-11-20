@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -16,3 +17,8 @@ def add_mission(request):
         }, status=201)
     else:
         return JsonResponse({'error': 'Mission name is required'}, status=400)
+
+
+def view_missions(request):
+    missions = Mission.objects.all()
+    return render(request, 'missions.html', {'missions': missions})
