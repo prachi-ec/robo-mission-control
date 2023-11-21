@@ -26,5 +26,10 @@ class Mission(models.Model):
         return self.name
 
     def set_completed(self):
+        self.status = "COMPLETED"
         self.completed_at = datetime.now()
+        self.save()
+
+    def set_executing(self):
+        self.status = "EXECUTING"
         self.save()
