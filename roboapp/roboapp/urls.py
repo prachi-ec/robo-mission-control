@@ -14,12 +14,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path
+# from robomission.views import add_mission, view_missions, MissionQueueView
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('add_mission/', add_mission, name='add_mission'),
+#     path('view_missions/', view_missions, name='view_missions'),
+#     path('add-mission_2/', MissionQueueView.as_view(), name='add-mission-2'),
+# ]
+
+# roboapp/urls.py
 from django.contrib import admin
-from django.urls import path
-from robomission.views import add_mission, view_missions
+from django.urls import path, include
+from robomission.views import add_mission, view_missions, add_mission_2
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add_mission/', add_mission, name='add_mission'),
     path('view_missions/', view_missions, name='view_missions'),
+    path('add_mission_2/', add_mission_2, name='add-mission-2'),
 ]

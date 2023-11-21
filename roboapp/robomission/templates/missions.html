@@ -3,7 +3,7 @@
     <h1>Missions</h1>
     <ul>
         {% for mission in missions %}
-            <li>{{ mission.id }} - {{ mission.name }} - {{ mission.created_at }} - {{ mission.completed_at }}</li>
+            <li>{{ mission.id }} - {{ mission.name }} - {{ mission.status }} - {{ mission.created_at }} - {{ mission.completed_at }}</li>
         {% endfor %}
     </ul>
 </body>

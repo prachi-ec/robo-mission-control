@@ -3,22 +3,24 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from .models import Mission
-
-@csrf_exempt
-@require_POST
-def add_mission(request):
-    mission_name = request.GET.get('mission_name', '')
-    if mission_name:
-        mission = Mission.objects.create(name=mission_name)
-
-        return JsonResponse({
-            'mission': mission.name,
-            'msg': f'added {mission.name} successfully',
-        }, status=201)
-    else:
-        return JsonResponse({'error': 'Mission name is required'}, status=400)
-
+from .models import Mission
+from .tasks import execute_mission
 
 def view_missions(request):
     missions = Mission.objects.all()
     return render(request, 'missions.html', {'missions': missions})
+
+@csrf_exempt
+@require_POST
+def add_mission(request):
+    try:
+        mission_name = request.GET.get('mission_name', '')
+
+        if mission_name:
+            mission = Mission.objects.create(name=mission_name)
+            res = execute_mission.delay(mission.id)
+            return JsonResponse({'status': 'Mission added to the queue'})
+        else:
+            return JsonResponse({'status': 'Invalid request'}, status=400)
+    except Exception as e:
+        return JsonResponse(data=e.__dict__(),status=500)
