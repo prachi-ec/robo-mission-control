@@ -1,0 +1,37 @@
+<!-- Your Django template file (e.g., mission_detail.html) -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coordinates Detail</title>
+    <!-- Add any other head elements or stylesheets here -->
+</head>
+<body>
+
+    <!-- Your template content goes here -->
+
+    <div id="websocketMessages">
+        <!-- Received WebSocket messages will be displayed here -->
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8000/ws/coordinates/');
+        const messagesDiv = document.getElementById('websocketMessages');
+
+        socket.onopen = (event) => {
+            messagesDiv.innerHTML += '<p>WebSocket connected</p>';
+        };
+
+        socket.onmessage = (event) => {
+            const message = `Received message: ${event.data}`;
+            messagesDiv.innerHTML += `<p>${message}</p>`;
+            // Handle the received data as needed
+        };
+
+        socket.onclose = (event) => {
+            messagesDiv.innerHTML += '<p>WebSocket disconnected</p>';
+        };
+    </script>
+
+</body>
+</html>
