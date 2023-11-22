@@ -26,13 +26,7 @@ def add_mission(request):
         if mission_name:
             mission = Mission.objects.create(name=mission_name)
             res = execute_mission.delay(mission.id)
-    
-            channel_layer = get_channel_layer()
-            res1 =async_to_sync(channel_layer.group_send)(
-                "mission_coordinates",  # Replace with the actual WebSocket group name
-                {"type": "mission_coord", "message": f"MC: I am called! finally! {mission.name}"}
-            )
-            print(res1)
+
             return JsonResponse({'status': 'Mission added to the queue'})
         else:
             return JsonResponse({'status': 'Invalid request'}, status=400)
