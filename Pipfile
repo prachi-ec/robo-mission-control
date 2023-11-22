@@ -8,6 +8,7 @@ django = "*"
 channels-redis = "*"
 celery = {extras = ["redis"], version = "*"}
 flower = "*"
+channels = "==3.0.5"
 
 [dev-packages]
 

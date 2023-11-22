@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'robomission',
     'celery',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,13 @@ APPEND_SLASH = False
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERYD_CONCURRENCY = 1
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+        'name': 'default',
+    },
+}
