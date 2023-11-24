@@ -5,9 +5,6 @@ from django.views.decorators.http import require_POST
 from .models import Mission
 from .models import Mission
 from .tasks import execute_mission
-from asgiref.sync import async_to_sync
-
-from channels.layers import get_channel_layer
 
 def view_missions(request):
     missions = Mission.objects.all()
@@ -25,7 +22,7 @@ def add_mission(request):
 
         if mission_name:
             mission = Mission.objects.create(name=mission_name)
-            res = execute_mission.delay(mission.id)
+            execute_mission.delay(mission.id)
 
             return JsonResponse({'status': 'Mission added to the queue'})
         else:

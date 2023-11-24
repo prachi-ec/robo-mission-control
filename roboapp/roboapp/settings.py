@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,11 +83,12 @@ ASGI_APPLICATION = 'roboapp.asgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': (os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3')),
+        'NAME': BASE_DIR / (os.environ.get('DB_NAME', 'db.sqlite3')),
     }
 }
 
+PORT = int(os.environ.get('DJANGO_PORT', 8000))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -131,15 +133,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPEND_SLASH = False
 
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+REDIS_URL_USER = f'''redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}'''
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', "redis://localhost:6379")
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL',"redis://localhost:6379")
+
 CELERYD_CONCURRENCY = 1
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(os.environ.get('REDIS_HOST', '127.0.0.1'), int(os.environ.get('REDIS_PORT', 6379)))],
         },
         'name': 'default',
     },
