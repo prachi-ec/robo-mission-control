@@ -32,4 +32,4 @@ class CoordinatesStreamer(WebsocketConsumer):
                     })
     
     def mission_coord(self, event):
-        self.send(text_data=json.dumps(event))
+        self.send(text_data=json.dumps(event["data"]))
