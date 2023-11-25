@@ -1,8 +1,14 @@
 .PHONY: migrations run
 
 migrations:
-    python manage.py makemigrations
-    python manage.py migrate
+	cd roboapp/ && \
+	python manage.py makemigrations && \
+	python manage.py migrate
 
 run:
-    python manage.py runserver
+	cd roboapp/ && \
+	python manage.py runserver
+
+celeryworker:
+	cd roboapp/ && \
+	celery -A roboapp worker --loglevel=info -P solo
