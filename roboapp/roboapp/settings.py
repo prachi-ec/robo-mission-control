@@ -150,8 +150,12 @@ CHANNEL_LAYERS = {
     },
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:70",
-    "http://localhost:80",
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://localhost:70",
+#     "http://localhost:80",
+# ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",
 ]
