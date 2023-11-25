@@ -7,14 +7,13 @@ Robo Mission Control is a Django-based backend designed to track missions and re
 1. After cloning the repository, ensure the python environment is in sync using
    
    `>>pipenv sync`
+
    The project expects redis to be available on the sytem. We are also using django's default SQLite3 as database.
 3. Once env is ready, change directory to app robomission and run make database ready.
    
-   `>>cd robomission`
-   
     `>>make migrations`
 
-    Incase the above doesn't works for you, run `>>python manage.py makemigrations` and then `>>python manage.py migrate`.
+    Incase the above doesn't works for you, go to roboapp `>>cd roboapp/` run `>>python manage.py makemigrations` and then `>>python manage.py migrate`.
 
 4.  Now in the cmd run the project using
 
@@ -22,9 +21,8 @@ Robo Mission Control is a Django-based backend designed to track missions and re
 
 5. After this we will start our celery task queue:
 
-   `>>cd robomission`
    
-   `>>celery -A roboapp worker --loglevel=info -P solo`
+   `>>make celeryworker`
 
 6. The project uses a `.env` file for configuration, in its absence we use the default values. Here are the available options:
 
