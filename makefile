@@ -1,4 +1,4 @@
-.PHONY: migrations run
+.PHONY: migrations run celeryworker
 
 migrations:
 	cd roboapp/ && \
